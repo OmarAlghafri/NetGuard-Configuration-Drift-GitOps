@@ -20,10 +20,6 @@ Thumbs.db
 *.tmp
 *.log
 
-# README is finalised and published manually as the last step, together with
-# the captured screenshots and demo recordings. Kept out of tree until then.
-README.md
-
 # Local planning notes (not part of the published project)
 network-projects-roadmap.md
 
