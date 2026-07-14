@@ -39,10 +39,18 @@ def _corrective_line(change: Change) -> str:
 
 
 def build_revert_commands(result: DriftResult) -> list[str]:
-    """Translate detected drift into the IOS commands that undo it."""
+    """Translate detected drift into the IOS commands that undo it.
+
+    Additions are negated before removals are re-applied. This matters for
+    replace-semantics commands such as ``switchport access vlan``: negating the
+    drifted value first returns the setting to its default, after which the
+    baseline value is re-applied cleanly, instead of the negation wiping out the
+    value just restored.
+    """
     commands: list[str] = []
     current_block = None
-    for change in result.changes:
+    ordered = sorted(result.changes, key=lambda c: 0 if c.op == "+" else 1)
+    for change in ordered:
         correction = _corrective_line(change)
         if change.parent:
             if change.parent != current_block:

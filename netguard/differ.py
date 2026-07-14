@@ -21,6 +21,15 @@ from ciscoconfparse import CiscoConfParse
 
 from .normalize import normalize
 
+# ciscoconfparse emits informational loguru messages on every parse; they are
+# noise for a CLI tool, so silence that library's logger on import.
+try:
+    from loguru import logger as _loguru_logger
+
+    _loguru_logger.disable("ciscoconfparse")
+except Exception:  # pragma: no cover - loguru is a ciscoconfparse dependency
+    pass
+
 
 @dataclass
 class Change:
