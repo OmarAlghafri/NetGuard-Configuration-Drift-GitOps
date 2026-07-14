@@ -1,0 +1,5 @@
+# Normalise line endings: text files stored as LF in the repository.
+* text=auto eol=lf
+
+# Treat images as binary.
+*.png binary

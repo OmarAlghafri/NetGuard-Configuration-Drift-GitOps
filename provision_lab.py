@@ -41,7 +41,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 INTENDED = HERE / "configs" / "intended"
-PROJECT_NAME = "NetGuard — Configuration Drift Detection & GitOps Compliance Engine"
+PROJECT_PREFIX = "NetGuard"
 
 # Dynamips template identifiers registered in this GNS3 installation. Built-in
 # node types (Ethernet switch, Cloud) are created directly on the local compute.
@@ -105,11 +105,11 @@ class GNS3:
 
 def find_project(gns3: GNS3) -> str:
     for proj in gns3.get("/projects"):
-        if proj["name"] == PROJECT_NAME:
+        if proj["name"].startswith(PROJECT_PREFIX):
             if proj["status"] != "opened":
                 gns3.post(f"/projects/{proj['project_id']}/open")
             return proj["project_id"]
-    raise SystemExit(f"Project not found in GNS3: {PROJECT_NAME!r}. Create it in the GNS3 GUI first.")
+    raise SystemExit(f"No GNS3 project starting with {PROJECT_PREFIX!r} found. Create it in the GNS3 GUI first.")
 
 
 def wipe(gns3: GNS3, pid: str) -> None:
@@ -157,7 +157,7 @@ def link(gns3: GNS3, pid: str, a: dict, ap: int, an: int, b: dict, bp: int, bn: 
 def build(start: bool) -> None:
     gns3 = GNS3()
     pid = find_project(gns3)
-    print(f"[*] project: {PROJECT_NAME}")
+    print(f"[*] project: {PROJECT_PREFIX} (id {pid})")
     print("[*] wiping existing nodes/links")
     wipe(gns3, pid)
 
