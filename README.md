@@ -182,3 +182,7 @@ no device is needed.
   context-aware config replace is future work.
 - Scheduling is documented rather than bundled; a check is a good fit for Task
   Scheduler or cron.
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE).
