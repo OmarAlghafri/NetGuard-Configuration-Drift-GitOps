@@ -1,9 +1,37 @@
 # Capture guide
 
-The images referenced by the README are captured here. Run each command in a
-clean terminal (or the GNS3 GUI) and capture the result. Recordings are saved as
-GIFs under `screenshots/`; still images and the topology diagram under
-`diagrams/`.
+The images referenced by the README are captured here. Most are still
+screenshots; two are optional short recordings.
+
+## Tools
+
+- Still screenshots: the Windows Snipping Tool (`Win`+`Shift`+`S`), saved as PNG.
+- Recordings (optional): ScreenToGif (free) records a screen region and exports a
+  GIF directly.
+
+## One-time setup
+
+Open a PowerShell window in the project folder (Shift+right-click the folder,
+"Open PowerShell window here") and activate the virtual environment so `python`
+resolves to the project interpreter:
+
+```
+.venv\Scripts\Activate.ps1
+```
+
+After that, the `python ...` commands below run as written.
+
+## The quick way
+
+`demo.ps1` runs the whole story and pauses between stages so a screenshot can be
+taken at each one:
+
+```
+.\demo.ps1
+```
+
+That single script covers images 02 through 05 below. Use the per-image notes
+for the GNS3 canvas shots and the test run, which are separate.
 
 Suggested terminal: a maximised window, readable font size, dark background.
 
