@@ -27,6 +27,12 @@ README.md
 # Local planning notes (not part of the published project)
 network-projects-roadmap.md
 
+# Transient run outputs
+snapshots/
+reports/*.md
+
+# Real inventory captured device snapshots are not committed; baselines are.
+
 # GNS3 project working directory (topology is built in the GUI; its runtime
 # artifacts are machine-specific and not versioned inside the code repo).
 # The topology .gns3 file can be exported into diagrams/ later for reference.
