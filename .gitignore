@@ -1,0 +1,34 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Secrets / real inventory — NEVER commit real credentials
+devices.yaml
+*.secret
+.env
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+# Runtime / temp
+*.tmp
+*.log
+
+# README is finalised and published manually as the last step, together with
+# the captured screenshots and demo recordings. Kept out of tree until then.
+README.md
+
+# Local planning notes (not part of the published project)
+network-projects-roadmap.md
+
+# GNS3 project working directory (topology is built in the GUI; its runtime
+# artifacts are machine-specific and not versioned inside the code repo).
+# The topology .gns3 file can be exported into diagrams/ later for reference.
+NetGuard — Configuration Drift Detection & GitOps Compliance Engine/
+

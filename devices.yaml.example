@@ -1,0 +1,22 @@
+# NetGuard device inventory — EXAMPLE
+# Copy to devices.yaml and fill in real credentials.
+# devices.yaml is gitignored; never commit real passwords.
+
+defaults:
+  device_type: cisco_ios      # Netmiko driver for Cisco IOS (c3725 / dynamips)
+  username: admin             # priv-15 user configured on each device
+  password: "REPLACE_ME"      # admin password
+  # secret: "REPLACE_ME"      # enable secret (only if not already priv 15)
+  port: 22                    # SSH
+
+# Management network = 192.168.56.0/24 (VirtualBox Host-Only)
+devices:
+  - name: R1
+    host: 192.168.56.20
+    role: router
+  - name: R2
+    host: 192.168.56.21
+    role: router
+  - name: SW1
+    host: 192.168.56.22
+    role: switch

@@ -1,0 +1,4 @@
+# NetGuard runtime dependencies (pinned to the versions installed in .venv)
+netmiko==4.7.0
+ciscoconfparse==1.9.52
+PyYAML==6.0.3
