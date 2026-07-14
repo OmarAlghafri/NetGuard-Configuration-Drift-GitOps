@@ -9,14 +9,14 @@ defaults:
   # secret: "REPLACE_ME"      # enable secret (only if not already priv 15)
   port: 22                    # SSH
 
-# Management network = 192.168.56.0/24 (VirtualBox Host-Only)
+# Management network = 10.99.99.0/24 (GNS3 loopback adapter, 10.99.99.1)
 devices:
   - name: R1
-    host: 192.168.56.20
+    host: 10.99.99.20
     role: router
   - name: R2
-    host: 192.168.56.21
+    host: 10.99.99.21
     role: router
   - name: SW1
-    host: 192.168.56.22
+    host: 10.99.99.22
     role: switch

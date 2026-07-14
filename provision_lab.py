@@ -11,12 +11,12 @@ Topology
     R1 Fa0/0 ------ 10.0.12.0/30 (OSPF area 0) ------ Fa0/0 R2
     R1 Fa0/1 --.                                    .-- Fa0/1 R2
                |                                    |
-              MGMT-SW (Ethernet switch) --- Cloud (host-only 192.168.56.0/24)
+              MGMT-SW (Ethernet switch) --- Cloud (loopback 10.99.99.0/24)
                |
     SW1 Fa0/0 -'      SW1 Fa1/0-3: VLAN 10/20 access ports
 
-Management addressing (192.168.56.0/24, VirtualBox host-only):
-    R1  192.168.56.20    R2  192.168.56.21    SW1 192.168.56.22
+Management addressing (10.99.99.0/24, GNS3 loopback adapter):
+    R1  10.99.99.20    R2  10.99.99.21    SW1 10.99.99.22
 
 Usage
     python provision_lab.py            # build (idempotent: wipes and rebuilds)
@@ -47,7 +47,11 @@ PROJECT_NAME = "NetGuard — Configuration Drift Detection & GitOps Compliance E
 # node types (Ethernet switch, Cloud) are created directly on the local compute.
 TPL_ROUTER = "954d4a9f-de03-4e3e-b61b-ec48946640c2"   # c3725
 TPL_SWITCH = "c919bf3e-6fcf-4cbc-9e95-148fc90ed8da"   # c3725 + NM-16ESW
-HOST_UPLINK = "Ethernet"  # host adapter bridged to 192.168.56.0/24 (host-only)
+# Host adapter that carries the management network. The Microsoft loopback
+# adapter (10.99.99.1/24) is used rather than the VirtualBox host-only adapter:
+# it bridges host-originated traffic reliably under Npcap, which the host-only
+# adapter does not.
+HOST_UPLINK = "GNS3-Loopback"
 
 
 def gns3_server_ini() -> Path:
