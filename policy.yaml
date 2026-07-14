@@ -1,0 +1,62 @@
+# NetGuard severity policy.
+#
+# Each change line produced by the differ is tested against these rules in
+# order; the first rule whose patterns match assigns the severity. Editing this
+# file changes how drift is classified without any code change.
+
+rules:
+  - severity: critical
+    description: Routing protocol change
+    patterns:
+      - '^router (ospf|eigrp|bgp|rip)'
+      - '^\s*network '
+      - '^\s*(no )?passive-interface'
+      - '^\s*router-id'
+      - '^\s*redistribute'
+      - '^ip route '
+
+  - severity: critical
+    description: Access-control or firewall change
+    patterns:
+      - '^ip access-list'
+      - '^access-list '
+      - '^\s*access-class'
+      - '^\s*ip access-group'
+      - '^\s*permit '
+      - '^\s*deny '
+
+  - severity: critical
+    description: Authentication, AAA or remote-access change
+    patterns:
+      - '^username '
+      - '^enable (secret|password)'
+      - '^aaa '
+      - '^\s*login'
+      - '^\s*transport input'
+      - '^\s*(no )?ip ssh'
+      - '^\s*(no )?ip http'
+
+  - severity: warning
+    description: VLAN or switchport change
+    patterns:
+      - '^vlan '
+      - '^\s*switchport'
+      - '^\s*name '
+      - '^\s*spanning-tree'
+
+  - severity: warning
+    description: Interface or addressing change
+    patterns:
+      - '^interface '
+      - '^\s*ip address'
+      - '^\s*(no )?shutdown'
+      - '^\s*duplex'
+      - '^\s*speed'
+
+  - severity: info
+    description: Descriptive or cosmetic change
+    patterns:
+      - '^\s*description'
+      - '^banner'
+      - '^\s*logging'
+      - '^hostname '

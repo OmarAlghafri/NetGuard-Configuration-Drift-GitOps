@@ -1,0 +1,13 @@
+[project]
+name = "netguard"
+version = "1.0.0"
+description = "Configuration drift detection and GitOps compliance for Cisco IOS networks."
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
