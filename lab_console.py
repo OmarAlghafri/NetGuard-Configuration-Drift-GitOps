@@ -102,11 +102,24 @@ class Console:
         self.run("terminal length 0")
 
     def running_config(self) -> str:
-        raw = self.run("show running-config", wait=4)
-        lines = raw.splitlines()
-        start = next((i for i, l in enumerate(lines) if l.strip().startswith("version ")), 0)
-        end = next((i for i, l in enumerate(lines) if l.strip() == "end"), len(lines) - 1)
-        return "\n".join(l.rstrip() for l in lines[start:end + 1]) + "\n"
+        # Read adaptively until the config terminator ("end") arrives rather than
+        # waiting a fixed time, so a longer config is never captured half-read.
+        for _ in range(3):
+            self.run("terminal length 0")
+            self.sock.sendall(b"show running-config\r")
+            raw = ""
+            deadline = time.time() + 30
+            while time.time() < deadline:
+                time.sleep(1.0)
+                raw += self._read()
+                if any(line.strip() == "end" for line in raw.splitlines()):
+                    break
+            lines = raw.splitlines()
+            start = next((i for i, l in enumerate(lines) if l.strip().startswith("version ")), None)
+            end = next((i for i, l in enumerate(lines) if l.strip() == "end"), None)
+            if start is not None and end is not None and end > start:
+                return "\n".join(l.rstrip() for l in lines[start:end + 1]) + "\n"
+        raise RuntimeError("could not capture a complete running-config from the console")
 
     def configure(self, commands: list[str]) -> None:
         self.run("configure terminal")

@@ -31,6 +31,10 @@ network-projects-roadmap.md
 snapshots/
 reports/*.md
 
+# Editor workspace and raw/unsorted screenshots
+docs/.obsidian/
+_raw_screenshots/
+
 # Real inventory captured device snapshots are not committed; baselines are.
 
 # GNS3 project working directory (topology is built in the GUI; its runtime
