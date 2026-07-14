@@ -5,7 +5,7 @@ __pycache__/
 *.pyo
 .pytest_cache/
 
-# Secrets / real inventory — NEVER commit real credentials
+# Secrets / real inventory - never commit real credentials
 devices.yaml
 *.secret
 .env

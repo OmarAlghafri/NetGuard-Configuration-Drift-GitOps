@@ -1,4 +1,4 @@
-# NetGuard device inventory — EXAMPLE
+# NetGuard device inventory - example
 # Copy to devices.yaml and fill in real credentials.
 # devices.yaml is gitignored; never commit real passwords.
 
