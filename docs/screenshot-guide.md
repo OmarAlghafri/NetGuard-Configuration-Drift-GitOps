@@ -44,61 +44,29 @@ visible. Take this after `provision_lab.py` runs and the nodes are started
 On the R1 console: `show ip ospf neighbor` and `show ip route ospf`, showing the
 FULL adjacency with R2 and the learned loopback route.
 
-## screenshots/01-provision.gif
-Record running:
-```
-python provision_lab.py --start
-```
-Then switch to the GNS3 canvas to show the topology appear and the nodes boot.
+The five stage images below are produced in one pass by `demo.ps1`, which pauses
+after each stage so it can be captured.
 
-## screenshots/02-baseline.gif
-Record:
-```
-python lab_console.py capture --out snapshots/current
-python drift_engine.py capture-baseline --source dir --source-dir snapshots/current
-git log --oneline
-```
-The last command shows the baseline-approval commits, making the GitOps flow
-visible.
+## screenshots/01-baseline.png
+Stage 1: every device reports `clean` and `git log` shows the baseline-approval
+commits, making the GitOps flow visible.
 
-## screenshots/03-detect.gif
-Record injecting drift and detecting it:
-```
-python lab_console.py inject R1 --scenario rogue-user
-python lab_console.py inject R2 --scenario ospf-hijack
-python lab_console.py inject SW1 --scenario vlan-hop
-python lab_console.py capture --out snapshots/current
-python drift_engine.py check --source dir --source-dir snapshots/current --report
-```
-This is the key image: CRITICAL and WARNING drift, per-line severity and the
-alerts.
+## screenshots/02-inject.png
+Stage 2: the three drift scenarios are applied to the live devices.
 
-## screenshots/04-dryrun.gif
-Record the safe preview:
-```
-python drift_engine.py check --source dir --source-dir snapshots/current --auto-revert --dry-run --alert-threshold critical
-```
-Show that the corrective commands are printed and no device is touched.
+## screenshots/03-detect.png
+Stage 3 (the key image): R1 and R2 report CRITICAL drift and SW1 reports WARNING,
+each with per-line severity and an alert.
 
-## screenshots/05-remediate.gif
-Record remediation closing the loop:
-```
-python lab_console.py revert R1
-python lab_console.py revert R2
-python lab_console.py revert SW1
-python lab_console.py capture --out snapshots/current
-python drift_engine.py check --source dir --source-dir snapshots/current
-```
-End on all devices reporting `clean`.
+## screenshots/04-dryrun.png
+Stage 4: the revert preview prints the corrective commands for the CRITICAL drift
+only, without touching any device.
 
-## screenshots/06-tests.png
-Record or screenshot:
+## screenshots/05-remediate.png
+Stage 5: the devices are reverted and every one returns to `clean`.
+
+## screenshots/06-tests.png (optional)
+The test suite passing:
 ```
 python -m pytest
 ```
-Showing the suite passing.
-
-## Tip
-
-`audit_log.md` and the newest file under `reports/` are good still images to
-include as well; they show the persistent record produced by the run.
